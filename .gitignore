@@ -1,0 +1,59 @@
+# Python-generated files
+__pycache__/
+*.py[co]
+build/
+dist/
+*.egg-info
+wheels/
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.*.local
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Generated project files
+generated_project/*
+!generated_project/.gitkeep
+
+# Test files
+test_*.py
+!test_api.py
+!test_frontend.py
+
+# Python version file
+.python-version
+
+# Cache directories
+.jbeval/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Lock files
+uv.lock
+
+# Sensitive config files
+*.secret
+*.key
+*.pem

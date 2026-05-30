@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoderBuddy - AI Website Generator</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background gradient -->
+    <div class="bg-gradient"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>CoderBuddy</span>
+                </div>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="showAbout()">
+                        <i class="fas fa-info-circle"></i>
+                        About
+                    </button>
+                    <button class="nav-btn" onclick="showSettings()">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">AI-Powered</span><br>
+                        Website Generator
+                    </h1>
+                    <p class="hero-subtitle">
+                        Transform your ideas into stunning websites with the power of AI.
+                        Just describe what you want, and watch the magic happen.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Generator Section -->
+            <section class="generator">
+                <div class="generator-card">
+                    <div class="prompt-section">
+                        <label for="prompt" class="prompt-label">
+                            <i class="fas fa-magic"></i>
+                            Describe your website
+                        </label>
+                        <textarea 
+                            id="prompt" 
+                            class="prompt-input" 
+                            placeholder="Create a modern portfolio website with a dark theme, smooth animations, and contact form..."
+                            rows="4"
+                        ></textarea>
+                        <div class="prompt-actions">
+                            <button class="example-btn" onclick="loadExample('portfolio')">
+                                <i class="fas fa-lightbulb"></i>
+                                Portfolio Example
+                            </button>
+                            <button class="example-btn" onclick="loadExample('ecommerce')">
+                                <i class="fas fa-shopping-cart"></i>
+                                E-commerce Example
+                            </button>
+                            <button class="example-btn" onclick="loadExample('blog')">
+                                <i class="fas fa-blog"></i>
+                                Blog Example
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="generate-section">
+                        <button id="generateBtn" class="generate-btn" onclick="generateWebsite()">
+                            <i class="fas fa-rocket"></i>
+                            <span>Generate Website</span>
+                            <div class="loading-spinner" style="display: none;"></div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results" class="results" style="display: none;">
+                <div class="results-header">
+                    <h2 class="results-title">
+                        <i class="fas fa-check-circle"></i>
+                        Website Generated Successfully!
+                    </h2>
+                    <div class="results-actions">
+                        <button class="action-btn primary" onclick="downloadProject()">
+                            <i class="fas fa-download"></i>
+                            Download ZIP
+                        </button>
+                        <button class="action-btn secondary" onclick="cleanProject()">
+                            <i class="fas fa-trash"></i>
+                            Clean
+                        </button>
+                    </div>
+                </div>
+
+                <div class="results-content">
+                    <!-- Preview Panel -->
+                    <div class="preview-panel">
+                        <div class="panel-header">
+                            <h3>
+                                <i class="fas fa-eye"></i>
+                                Live Preview
+                            </h3>
+                            <button class="refresh-btn" onclick="refreshPreview()">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div class="iframe-container">
+                            <iframe id="preview" src="/preview" sandbox="allow-scripts allow-same-origin"></iframe>
+                        </div>
+                    </div>
+
+                    <!-- Files Panel -->
+                    <div class="files-panel">
+                        <div class="panel-header">
+                            <h3>
+                                <i class="fas fa-code"></i>
+                                Generated Files
+                            </h3>
+                        </div>
+                        <div id="filesList" class="files-list">
+                            <!-- Files will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Error Section -->
+            <section id="error" class="error" style="display: none;">
+                <div class="error-card">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="error-title">Generation Failed</h3>
+                    <p id="errorMessage" class="error-message"></p>
+                    <button class="retry-btn" onclick="retryGeneration()">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>About CoderBuddy</h3>
+                <button class="close-btn" onclick="closeModal('aboutModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>CoderBuddy is an AI-powered website generator that creates modern, responsive websites from simple text descriptions.</p>
+                <br>
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>Modern HTML5, CSS3, and JavaScript</li>
+                    <li>Responsive design for all devices</li>
+                    <li>Smooth animations and interactions</li>
+                    <li>Clean, semantic code</li>
+                    <li>Instant preview and download</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="close-btn" onclick="closeModal('settingsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="modelSelect">AI Model</label>
+                    <select id="modelSelect" class="setting-input">
+                        <option value="llama-3.3-70b-versatile">Llama 3.3 70B</option>
+                        <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                        <option value="gemma2-9b-it">Gemma 2 9B</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label for="autoRefresh">Auto-refresh Preview</label>
+                    <input type="checkbox" id="autoRefresh" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" style="display: none;">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Success!</span>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
